@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { forgotPassword, verifyCode, resetPassword } from '../../api/apiAuth';
 import { toast } from 'react-toastify';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const ForgotPassword = () => {
     const navigate = useNavigate();
@@ -10,6 +11,8 @@ const ForgotPassword = () => {
     const [otp, setOtp] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [countdown, setCountdown] = useState(0);
 
@@ -205,35 +208,47 @@ const ForgotPassword = () => {
                 {step === 3 && (
                     <form className="mt-8 space-y-6" onSubmit={handleResetPassword}>
                         <div className="space-y-4">
-                            <div>
+                            <div className="relative">
                                 <label htmlFor="newPassword" className="sr-only">
                                     Mật khẩu mới
                                 </label>
                                 <input
                                     id="newPassword"
                                     name="newPassword"
-                                    type="password"
+                                    type={showNewPassword ? "text" : "password"}
                                     required
                                     value={newPassword}
                                     onChange={(e) => setNewPassword(e.target.value)}
-                                    className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm pr-10"
                                     placeholder="Mật khẩu mới (tối thiểu 6 ký tự)"
                                 />
+                                <div
+                                    className="absolute right-3 top-2.5 text-gray-500 cursor-pointer hover:text-indigo-600 transition-colors"
+                                    onClick={() => setShowNewPassword(!showNewPassword)}
+                                >
+                                    {showNewPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                                </div>
                             </div>
-                            <div>
+                            <div className="relative">
                                 <label htmlFor="confirmPassword" className="sr-only">
                                     Xác nhận mật khẩu
                                 </label>
                                 <input
                                     id="confirmPassword"
                                     name="confirmPassword"
-                                    type="password"
+                                    type={showConfirmPassword ? "text" : "password"}
                                     required
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
-                                    className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                                    className="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm pr-10"
                                     placeholder="Xác nhận mật khẩu mới"
                                 />
+                                <div
+                                    className="absolute right-3 top-2.5 text-gray-500 cursor-pointer hover:text-indigo-600 transition-colors"
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                >
+                                    {showConfirmPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                                </div>
                             </div>
                         </div>
                         <button

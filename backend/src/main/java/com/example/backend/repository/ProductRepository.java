@@ -86,4 +86,17 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
       @Param("productId") Integer productId,
       Pageable pageable);
 
+  @Query("""
+          SELECT p FROM Product p
+          WHERE (:query IS NULL OR :query = '' OR p.name LIKE %:query% OR p.category.name LIKE %:query%)
+            AND (:minPrice IS NULL OR p.salePrice >= :minPrice)
+            AND (:maxPrice IS NULL OR p.salePrice <= :maxPrice)
+            AND p.status = 1
+      """)
+  List<Product> searchForAi(
+      @Param("query") String query,
+      @Param("minPrice") java.math.BigDecimal minPrice,
+      @Param("maxPrice") java.math.BigDecimal maxPrice,
+      Pageable pageable);
+
 }

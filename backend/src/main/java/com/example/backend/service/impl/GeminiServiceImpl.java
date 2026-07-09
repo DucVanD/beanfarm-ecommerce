@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -77,10 +78,10 @@ public class GeminiServiceImpl implements AiChatService {
         // Build request with function declarations and history
         Map<String, Object> request = buildGeminiRequest(message, history);
 
-        // 👉 LẤY API KEY 1 LẦN DUY NHẤT
+        // LẤY API KEY 1 LẦN DUY NHẤT
         String apiKey = geminiConfig.getApiKey();
 
-        // 👉 LOG 4 KÝ TỰ CUỐI (AN TOÀN)
+        // LOG 4 KÝ TỰ CUỐI (AN TOÀN)
         System.out.println(">>> Gemini key suffix: " +
                 (apiKey == null || apiKey.length() < 4
                         ? "NULL/SHORT"
@@ -129,8 +130,9 @@ public class GeminiServiceImpl implements AiChatService {
                 waitTime *= 2;
 
             } catch (org.springframework.web.client.HttpClientErrorException e) {
-                System.err.println(">>> Gemini API Error: " + e.getStatusCode());
-                throw e;
+                String errorBody = e.getResponseBodyAsString();
+                System.err.println(">>> Gemini API Error (" + e.getStatusCode() + "): " + errorBody);
+                throw new Exception("Lỗi từ Gemini AI: " + e.getStatusCode() + ". Chi tiết: " + errorBody);
 
             } catch (Exception e) {
                 System.err.println(">>> System Error: " + e.getMessage());
@@ -149,11 +151,19 @@ public class GeminiServiceImpl implements AiChatService {
         List<Map<String, Object>> contents = new ArrayList<>();
 
         if (history != null) {
+            boolean firstMessageAdded = false;
             for (ChatMessageDto msg : history) {
+                // 👉 QUY TẮC GEMINI: Tin nhắn đầu tiên LUÔN phải là 'user'
+                if (!firstMessageAdded && "model".equalsIgnoreCase(msg.getRole())) {
+                    System.out.println(">>> Skipping leading 'model' message in history to avoid 400 error.");
+                    continue;
+                }
+
                 Map<String, Object> content = new HashMap<>();
                 content.put("role", msg.getRole());
                 content.put("parts", List.of(Map.of("text", msg.getContent())));
                 contents.add(content);
+                firstMessageAdded = true;
             }
         }
 
@@ -405,28 +415,14 @@ public class GeminiServiceImpl implements AiChatService {
                 query.equalsIgnoreCase("danh sách") ||
                 query.equalsIgnoreCase("danh sach");
 
-        List<Product> products = productRepository.findAll().stream()
-                .filter(p -> {
-                    if (showAll)
-                        return true;
+        String searchQuery = showAll ? "" : query;
+        int limit = showAll ? 10 : 5;
 
-                    String lowerQuery = query.toLowerCase();
-                    // Tìm kiếm trong tên sản phẩm
-                    boolean matchName = p.getName().toLowerCase().contains(lowerQuery);
-
-                    // Tìm kiếm trong tên danh mục (category)
-                    boolean matchCategory = false;
-                    if (p.getCategory() != null && p.getCategory().getName() != null) {
-                        matchCategory = p.getCategory().getName().toLowerCase().contains(lowerQuery);
-                    }
-
-                    return matchName || matchCategory;
-                })
-                .filter(p -> minPrice == null || p.getSalePrice().compareTo(minPrice) >= 0)
-                .filter(p -> maxPrice == null || p.getSalePrice().compareTo(maxPrice) <= 0)
-                .filter(p -> p.getStatus() == 1) // Only active products
-                .limit(showAll ? 10 : 5) // Hiển thị nhiều hơn khi show all
-                .collect(Collectors.toList());
+        List<Product> products = productRepository.searchForAi(
+                searchQuery,
+                minPrice,
+                maxPrice,
+                PageRequest.of(0, limit));
 
         if (products.isEmpty()) {
             return new ChatResponse(
@@ -487,7 +483,7 @@ public class GeminiServiceImpl implements AiChatService {
         String message = String.format(
                 "Tôi đã lấy được thông tin chi tiết của sản phẩm **%s**. Bạn có thể xem hình ảnh và mô tả đầy đủ ở phần thẻ bên dưới nhé!\n\n"
                         +
-                        "📦 **Thông tin tóm tắt:**\n" +
+                        " **Thông tin tóm tắt:**\n" +
                         "- **Giá:** %s\n" +
                         "- **Tồn kho:** %d sản phẩm\n" +
                         "- **Mô tả:** %s",

@@ -10,7 +10,7 @@ const Chatbot = () => {
     const [messages, setMessages] = useState([
         {
             role: 'model',
-            content: 'Xin chào! Tôi là trợ lý AI của Siêu Thị Mini. Tôi có thể giúp bạn tìm kiếm sản phẩm, tư vấn mua sắm. Bạn cần tôi hỗ trợ gì không? 😊',
+            content: 'Xin chào! Tôi là trợ lý AI của Siêu Thị Mini. Tôi có thể giúp bạn tìm kiếm sản phẩm, tư vấn mua sắm. Bạn cần tôi hỗ trợ gì không?',
         },
     ]);
     const [input, setInput] = useState('');
