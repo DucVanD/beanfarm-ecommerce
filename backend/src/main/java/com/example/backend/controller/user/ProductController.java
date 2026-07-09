@@ -42,7 +42,7 @@ public class ProductController {
     @PostMapping
     @org.springframework.security.access.prepost.PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public ResponseEntity<ProductDto> create(@RequestBody ProductDto dto) {
-        return ResponseEntity.ok(productService.create(dto));
+        return ResponseEntity.ok(productService.create(dto)); 
     }
 
     @PutMapping("/{id}")

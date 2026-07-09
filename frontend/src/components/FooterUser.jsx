@@ -64,7 +64,7 @@ const FooterUser = () => {
 
             <div className="mt-5 space-y-2 text-sm text-gray-600">
               <p>
-                <span className="font-bold text-gray-800">Địa chỉ:</span> 70 Lữ Gia, P.15, Q.11, TP.HCM
+                <span className="font-bold text-gray-800">Địa chỉ:</span> 123 Đường Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh
               </p>
               <p>
                 <span className="font-bold text-gray-800">Hotline:</span>{" "}
@@ -142,7 +142,7 @@ const FooterUser = () => {
         {/* Copyright Bar */}
         <div className="bg-emerald-800 text-white/90 py-4 text-center text-sm border-t border-emerald-900">
           <div className="max-w-7xl mx-auto px-4">
-            © 2024 Bản quyền thuộc về <span className="font-bold text-white">Bean Farm</span> | Design by Sapo
+            © 2026 Bean Farm. All rights reserved. | Thiết kế và phát triển bởi <span className="font-bold text-white">Bean Farm Team</span>
           </div>
         </div>
       </footer>

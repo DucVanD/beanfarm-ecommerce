@@ -39,7 +39,7 @@ const wards = {
 };
 
 // --- InputField Component (moved outside to prevent re-creation) ---
-const InputField = ({ label, name, icon: Icon, placeholder, value, onChange, errors }) => (
+const InputField = ({ label, name, icon: Icon, placeholder, value, onChange, errors, inputProps }) => (
   <div className="mb-4">
     <div className="relative">
       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
@@ -51,7 +51,8 @@ const InputField = ({ label, name, icon: Icon, placeholder, value, onChange, err
         onChange={onChange}
         placeholder={placeholder}
         className={`w-full pl-10 pr-3 py-3 border rounded-xl text-sm outline-none transition-all ${errors?.[name] ? "border-red-500 bg-red-50" : "border-gray-200 focus:border-green-500 focus:ring-1 focus:ring-green-500"
-          }`}
+          }`} 
+        {...(inputProps || {})}
       />
     </div>
     {errors?.[name] && <p className="text-red-500 text-xs mt-1 ml-1">{errors[name]}</p>}
@@ -104,7 +105,14 @@ const Checkout = () => {
   }, [user, navigate]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
+    let { value } = e.target;
+
+    // Giới hạn và loại bỏ ký tự không phải số cho trường phone
+    if (name === "phone") {
+      value = String(value).replace(/\D/g, "").slice(0, 10);
+    }
+
     setForm((prev) => ({
       ...prev,
       [name]: value,
@@ -130,6 +138,7 @@ const Checkout = () => {
     if (!form.email.trim()) newErrors.email = "Vui lòng nhập email";
     else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = "Email không hợp lệ";
     if (!form.phone.trim()) newErrors.phone = "Vui lòng nhập SĐT";
+    else if (!/^\d{10}$/.test(form.phone)) newErrors.phone = "Số điện thoại phải gồm 10 chữ số";
     if (!form.address.trim()) newErrors.address = "Vui lòng nhập địa chỉ";
     if (!form.district) newErrors.district = "Chọn quận/huyện";
     if (!form.ward) newErrors.ward = "Chọn phường/xã";
@@ -268,7 +277,7 @@ const Checkout = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <InputField name="name" icon={FaUser} placeholder="Họ và tên" value={form.name} onChange={handleChange} errors={errors} />
-              <InputField name="phone" icon={FaPhone} placeholder="Số điện thoại" value={form.phone} onChange={handleChange} errors={errors} />
+              <InputField name="phone" icon={FaPhone} placeholder="Số điện thoại" value={form.phone} onChange={handleChange} errors={errors} inputProps={{ inputMode: 'numeric', maxLength: 10, type: 'tel' }} />
             </div>
             <InputField name="email" icon={FaEnvelope} placeholder="Địa chỉ Email" value={form.email} onChange={handleChange} errors={errors} />
             <InputField name="address" icon={FaMapMarkerAlt} placeholder="Địa chỉ (Số nhà, tên đường)" value={form.address} onChange={handleChange} errors={errors} />

@@ -171,7 +171,7 @@ public class VNPayServiceImpl implements VNPayService {
                             System.out.println("🔄 Reverted voucher usage: " + voucher.getVoucherCode());
                         }
                     } catch (Exception e) {
-                        System.err.println("❌ Failed to revert voucher usage: " + e.getMessage());
+                        System.err.println(" Failed to revert voucher usage: " + e.getMessage());
                     }
                 }
 
@@ -182,11 +182,11 @@ public class VNPayServiceImpl implements VNPayService {
                 result.put("orderId", String.valueOf(orderId));
                 result.put("reason", "Người dùng hủy thanh toán hoặc thanh toán thất bại");
 
-                System.out.println("❌ Payment cancelled for order: " + orderId);
+                System.out.println(" Payment cancelled for order: " + orderId);
             }
 
         } catch (Exception e) {
-            System.err.println("❌ Error in handleCallback: " + e.getMessage());
+            System.err.println(" Error in handleCallback: " + e.getMessage());
             e.printStackTrace();
 
             result.put("status", "error");

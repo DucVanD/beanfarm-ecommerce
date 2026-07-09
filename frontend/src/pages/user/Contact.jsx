@@ -100,7 +100,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-800 mb-1">Địa chỉ</h3>
-                    <p className="text-gray-600">70 Lữ Gia, Phường 15, Quận 11, TP.HCM</p>
+                    <p className="text-gray-600">123 Đường Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh</p>
                   </div>
                 </div>
 
@@ -254,7 +254,7 @@ const Contact = () => {
             <div className="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden">
               <div className="h-96 lg:h-[600px]">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.3250580897!2d106.6641!3d10.762622!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752ed2392c44df%3A0x460d5c7a5a5a5a5a!2s70%20L%E1%BB%AF%20Gia%2C%20Ph%C6%B0%E1%BB%9Dng%2015%2C%20Qu%E1%BA%ADn%2011%2C%20Th%C3%A0nh%20ph%E1%BB%91%20H%E1%BB%93%20Ch%C3%AD%20Minh!5e0!3m2!1svi!2s!4v1640995200000!5m2!1svi!2s"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.669658423711!2d106.679803875838!3d10.759920059495758!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f1b888ab257%3A0xd556ed7bc73ca591!2s123%20%C4%90%C6%B0%E1%BB%9Dng%20Nguy%E1%BB%85n%20V%C4%83n%20C%E1%BB%AF%2C%20Ph%C6%B0%E1%BB%9Dng%202%2C%20Qu%E1%BA%ADn%205%2C%20Th%C3%A0nh%20ph%E1%BB%91%20H%E1%BB%93%20Ch%C3%AD%20Minh!5e0!3m2!1svi!2s!4v1700000000000!5m2!1svi!2s"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -273,7 +273,7 @@ const Contact = () => {
                       Bean Farm - Siêu thị nông sản
                     </h3>
                     <p className="text-sm text-gray-600 mb-2">
-                      70 Lữ Gia, Phường 15, Quận 11, TP.HCM
+                      123 Đường Nguyễn Văn Cừ, Quận 5, TP. Hồ Chí Minh
                     </p>
                     <div className="flex items-center gap-4 text-sm text-gray-500">
                       <span className="flex items-center gap-1">
@@ -285,7 +285,7 @@ const Contact = () => {
                 </div>
                 <div className="flex gap-2 mt-3">
                   <a
-                    href="https://maps.google.com/?q=70+Lữ+Gia,+Phường+15,+Quận+11,+TP.HCM"
+                    href="https://maps.google.com/?q=123+Đường+Nguyễn+Văn+Cừ,+Quận+5,+TP.+Hồ+Chí+Minh"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 bg-blue-600 text-white py-2 px-3 rounded-md text-center text-sm hover:bg-blue-700 transition-colors"
@@ -293,7 +293,7 @@ const Contact = () => {
                     Chỉ đường
                   </a>
                   <a
-                    href="https://maps.google.com/?q=70+Lữ+Gia,+Phường+15,+Quận+11,+TP.HCM"
+                    href="https://maps.google.com/?q=123+Đường+Nguyễn+Văn+Cừ,+Quận+5,+TP.+Hồ+Chí+Minh"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 bg-gray-100 text-gray-700 py-2 px-3 rounded-md text-center text-sm hover:bg-gray-200 transition-colors"

@@ -7,7 +7,7 @@ const HeaderAdmin = () => {
   const navigate = useNavigate();
   const [admin, setAdmin] = useState(null);
 
-  // ✅ Lấy thông tin admin từ localStorage (CHỈ ĐỂ HIỂN THỊ)
+  //  Lấy thông tin admin từ localStorage (CHỈ ĐỂ HIỂN THỊ)
   useEffect(() => {
     const userData = localStorage.getItem("adminUser");
 
@@ -24,7 +24,7 @@ const HeaderAdmin = () => {
     }
   }, [navigate]);
 
-  // 🔒 LOGOUT (JWT Cookie → gọi API để xóa cookie)
+  //  LOGOUT (JWT Cookie → gọi API để xóa cookie)
   const handleLogout = async () => {
     try {
       await apiAuth.logout();
